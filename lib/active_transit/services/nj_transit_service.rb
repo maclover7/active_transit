@@ -29,6 +29,10 @@ module ActiveTransit
       serialized_trains
     end
 
+    def departures_for_station_name(station_name)
+      departures_for_station_id(station_name)
+    end
+
     private
 
     def fetch_station_data(station)
