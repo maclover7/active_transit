@@ -2,6 +2,8 @@ require 'active_support/core_ext/string/inflections'
 
 module ActiveTransit
   def self.service(name)
-    ActiveTransit.const_get("#{name.to_s.downcase}_service".camelize)
+    name = name.to_s.downcase
+    require "active_transit/services/#{name}_service"
+    ActiveTransit.const_get("#{name}_service".camelize)
   end
 end
