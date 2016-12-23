@@ -1,8 +1,3 @@
-require 'active_transit/service'
-
-require 'nokogiri'
-require 'rest-client'
-
 module ActiveTransit
   class NjTransitService < Service
     def departures_for_station_id(station_id)

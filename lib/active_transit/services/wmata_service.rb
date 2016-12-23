@@ -1,8 +1,3 @@
-require 'active_transit/service'
-
-require 'rest-client'
-require 'json'
-
 module ActiveTransit
   class WmataService < Service
     STATION_ENDPOINT = 'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/'

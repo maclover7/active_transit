@@ -1,3 +1,8 @@
+require 'active_transit/service'
+
+require 'rest-client'
+require 'json'
+require 'nokogiri'
 require 'active_support/core_ext/string/inflections'
 
 module ActiveTransit
