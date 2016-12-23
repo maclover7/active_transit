@@ -22,6 +22,10 @@ module ActiveTransit
       trains
     end
 
+    def destinations_for(train_line)
+      fetch_stations({ 'LineCode': train_line})
+    end
+
     private
 
     def fetch_station_data(station_id)
@@ -31,9 +35,10 @@ module ActiveTransit
       trains
     end
 
-    def fetch_stations
+    def fetch_stations(params = {})
       @stations ||= begin
-        stations = RestClient.get(STATIONS_ENDPOINT, params: { 'api_key': @api_key }).body
+        params.merge!({ 'api_key': @api_key })
+        stations = RestClient.get(STATIONS_ENDPOINT, params: params).body
         stations = JSON.parse(stations)['Stations']
         stations
       end
