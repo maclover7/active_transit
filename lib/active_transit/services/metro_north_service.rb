@@ -35,6 +35,10 @@ module ActiveTransit
       departures_for_station_id(station[station_name])
     end
 
+    def destinations_for(*)
+      raise NotSupportedError
+    end
+
     private
 
     def fetch_station_data(station_id)

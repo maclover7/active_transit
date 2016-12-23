@@ -1,5 +1,11 @@
 module ActiveTransit
   class Service
+    class Error < StandardError
+    end
+
+    class NotSupportedError < Error
+    end
+
     def departures_for_station_id(station_id)
       raise NotImplementedError
     end
