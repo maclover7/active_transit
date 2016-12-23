@@ -33,10 +33,46 @@ module ActiveTransit
       departures_for_station_id(station_name)
     end
 
+    def destinations_for(train_id)
+      page = fetch_train_data(train_id)
+      page = Nokogiri::HTML(page)
+
+      raw_destinations = page.css('td').select do |el|
+        el.attr('style') ? el : next
+      end
+
+      serialized_destinations = []
+
+      raw_destinations.each do |destination|
+        text = destination.content.split('  ')
+        station = text[0]
+
+        if text[1] == 'DEPARTED'
+          departed = true
+          time = ''
+        else
+          departed = false
+          time = text[1].split(' ')[1]
+        end
+
+        serialized_destinations << {
+          name: station,
+          time: time,
+          departed: departed
+        }
+      end
+
+      serialized_destinations
+    end
+
     private
 
     def fetch_station_data(station)
       RestClient.get("http://dv.njtransit.com/mobile/tid-mobile.aspx?sid=#{station}").body
+    end
+
+    def fetch_train_data(train)
+      RestClient.get("http://dv.njtransit.com/mobile/train_stops.aspx?train=#{train}").body
     end
 
     def train_destination(train)
